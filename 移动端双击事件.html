@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1">
+    <meta charset="utf-8">
+    <style>
+        * {
+            marign: 0;
+            padding: 0;
+        }
+
+     div{
+         width:200px; height:200px; background:#ccc;
+         margin:200px auto;
+     }
+
+    </style>
+
+
+</head>
+
+<body>
+<div>hehe</div>
+
+
+
+<script>
+function dbEvent(obj,fn){
+    var dbClick=false;
+    obj.addEventListener('touchstart',function(ev){
+        if(dbClick){
+            fn && fn.call(this,ev);
+        }
+
+        dbClick=true;
+        setTimeout(function(){
+            dbClick=false;
+        },200)
+    },false)
+}
+
+
+    var oDiv=document.querySelector('div');
+    var bSingle=true;
+    dbEvent(oDiv,function(ev){
+        if(bSingle){
+            this.style.transform='scale(2)';
+        } else {
+            this.style.transform='scale(1)';
+        }
+        bSingle=!bSingle;
+    })
+
+</script>
+</body>
+</html>

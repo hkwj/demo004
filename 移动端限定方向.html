@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1">
+    <meta charset="utf-8">
+    <style>
+        * {
+            marign: 0;
+            padding: 0;
+        }
+
+        div {
+            width: 100px;
+            height: 100px;
+            background: #ccc;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    </style>
+
+
+</head>
+
+<body>
+<div></div>
+
+
+<script>
+    var oDiv = document.querySelector('div');
+    var dir = '';
+    oDiv.addEventListener('touchstart', function (ev) {
+        var disX = ev.targetTouches[0].pageX - oDiv.offsetLeft;
+        var disY = ev.targetTouches[0].pageY - oDiv.offsetTop;
+
+        var downX = ev.targetTouches[0].pageX;
+        var downY = ev.targetTouches[0].pageY;
+
+
+        function fnMove(ev) {
+            if (dir == '') {
+                if (Math.abs(ev.targetTouches[0].pageX - downX) > 5) {
+                    dir = 'x';
+                } else if (Math.abs(ev.targetTouches[0].pageY - downY) > 5) {
+                    dir = 'y';
+                }
+            } else {
+                console.log(dir);
+                if (dir == 'x') {
+                    oDiv.style.left = ev.targetTouches[0].pageX - disX + 'px';
+                } else if (dir == 'y') {
+                    oDiv.style.top = ev.targetTouches[0].pageY - disY + 'px';
+                }
+            }
+        }
+
+
+        function fnEnd() {
+            oDiv.removeEventListener('touchmove', fnMove, false);
+            oDiv.removeEventListener('touchend', fnEnd, false);
+        }
+
+        oDiv.addEventListener('touchmove', fnMove, false);
+        oDiv.addEventListener('touchend', fnEnd, false);
+        ev.preventDefault();
+
+    }, false)
+
+
+</script>
+</body>
+</html>

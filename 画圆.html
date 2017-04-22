@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1"/>
+    <meta charset="utf-8">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #000;
+        }
+
+        #c1 {
+            background: #fff;
+        }
+    </style>
+
+
+</head>
+
+<body>
+<canvas id="c1" width="800" height="500"></canvas>
+
+
+<script>
+var oC=document.querySelector('#c1');
+    var gd=oC.getContext('2d');
+    gd.arc(300,200,100,0,270/180*Math.PI,false);
+    // gd.arc(圆心X,圆心Y,半径,起始角度-弧度,结束角度-弧度,是否逆时针);
+    gd.stroke();
+</script>
+</body>
+</html>

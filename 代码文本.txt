@@ -1,0 +1,951 @@
+7.6
+
+
+
+------------------------------------------------------------------------------
+cdn
+
+
+jq
+
+百度     https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js
+	 https://apps.bdimg.com/libs/jquery/1.11.1/jquery.min.js
+	 https://apps.bdimg.com/libs/jquery/1.7.2/jquery.min.js
+----------------------------------------------------------------------------
+jq 获取input 两组属性的元素方法
+
+<body>
+<div id="div1"></div>
+<input type="checkbox" name="sex" />
+<input type="checkbox" name="sex" checked="checked"/>
+<input type="checkbox" name="sex" />
+<input type="checkbox" name="sex" checked="checked"/>
+
+
+<script src="jquery-1.7.2.js"></script>
+<script>
+alert($('input[name="sex"][checked="checked"]').length);
+
+
+</script>
+</body>
+
+
+
+
+------------------------------------------------------------------------------------------
+封装滚轮事件
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+
+<style>
+*{
+	margin:0; padding:0; list-style:none;
+}
+#div1{
+	width:100px; height:100px; background:#ccc;
+}
+
+</style>
+
+
+
+</head>
+<body>
+<div id="div1"></div>
+
+
+
+
+<script>
+
+function addMouseWheel(obj,fn){
+	var firefox=window.navigator.userAgent.toLowerCase().indexOf('firefox');
+	if(firefox!=-1){
+		obj.addEventListener('DOMMouseScroll',fnWheel,false);
+	} else {
+		obj.onmousewheel=fnWheel;
+	}
+
+	function fnWheel(ev){
+		var oEvt=ev||event;
+		var down=false;
+		if(oEvt.wheelDelta){//ie chrome
+			down=oEvt.wheelDelta<0?true:false;
+		} else if(oEvt.detail){//ff
+			down=oEvt.detail>0?true:false;
+		}
+		fn(down);
+		if(oEvt.preventDefault){
+			oEvt.preventDefault();
+		}
+		return false;
+	}
+}
+
+
+var oDiv=document.getElementById('div1');
+addMouseWheel(oDiv,function(down){
+	if(down){
+		oDiv.style.height=oDiv.offsetHeight+10+'px';
+	} else {
+		oDiv.style.height=oDiv.offsetHeight-10+'px';
+	}
+})
+
+</script>
+</body>
+</html>
+
+
+----------------------------------------------------------------------------------------------
+
+事件捕获 和 事件冒泡
+
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+*{margin:0; padding:0; list-style:none;}
+#div1{
+      width:200px; height:200px; background:#ccc;
+      position:absolute; left:0; top:0;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div id="div1">
+      <input type="button" value="按钮" id="btn1" title="abc" name="222" >
+</div>
+
+
+
+<script>
+var oDiv=document.getElementById('div1');
+var oBtn=document.getElementById('btn1');
+
+
+//事件绑定 + 事件冒泡
+document.addEventListener('click',function(){
+      alert('document');
+},false);
+oDiv.addEventListener('click',function(){
+      alert('div');
+},false);
+oBtn.addEventListener('click',function(){
+      alert('btn');
+},false);
+
+
+
+
+//事件捕获
+document.addEventListener('click',function(){
+      alert('document');
+},true);
+oDiv.addEventListener('click',function(){
+      alert('div');
+},true);
+oBtn.addEventListener('click',function(){
+      alert('btn');
+},true);
+
+
+
+
+</script>
+</body>
+</html>
+
+
+
+---------------------------------------------------------------------------------------
+
+stopPropagation  阻止冒泡
+cancelBubble     阻止冒泡
+
+
+preventDefault  阻止默认
+return false    阻止默认
+
+
+
+
+------------------------------------------------------------------------------
+
+事件绑定 与  解绑定
+
+<script>
+
+function addEvent(obj,sEvt,fn){
+      if(obj.addEventListener){
+            obj.addEventListener(sEvt,fn,false);
+      } else {
+            obj.attachEvent('on'+sEvt,fn);
+      }
+}
+
+function removeEvent(obj,sEvt,fn){
+      if(obj.removeEventListener){
+            obj.removeEventListener(sEvt,fn,false);
+      } else {
+            obj.detachEvent('on'+sEvt,fn);
+      }
+}
+
+</script>
+
+
+-------------------------------------------------------------------------------
+
+键盘事件
+
+<script>
+document.onkeydown=function(ev){
+      var oEvt=ev||event;
+      console.log(oEvt.keyCode);
+}
+
+</script>
+
+
+------------------------------------------------------------------------------------
+转化成json格式 JSON.parse();
+
+<script>
+var json={a:0,b:1};
+console.log(json);
+var str=JSON.stringify(json);
+console.log(typeof(str));
+var json1=JSON.parse(str);
+console.log(json1);
+</script>
+
+
+------------------------------------------------------------------------------
+jq  stopPropagation
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+
+<style>
+*{
+	margin:0; padding:0; list-style:none;
+}
+div{
+	width:200px; height:200px; border:1px solid #000;
+	position:absolute; left:300px; top:0;
+}
+h3{
+	height:50px; border:3px solid #000;
+}
+</style>
+
+</head>
+<body>
+
+<div>
+	<h3>xxxx</h3>
+</div>
+
+
+<script src="vue/jquery-1.7.2.js"></script>
+<script>
+$(function(){
+	var oDiv=$('div');
+	var oH3=$('div h3');
+	oDiv.mouseover(function(){
+		console.log('div');
+	});
+	oH3.mouseover(function(ev){
+		console.log('h3');
+		//return false;
+		ev.stopPropagation();
+	})
+})
+</script>
+</body>
+</html>
+
+
+----------------------------------------------------------------------------------------
+jq animate
+
+
+<script>
+$(function(){
+	$('div').css('background','pink').stop().animate({'width':'800px','height':'600px'},2000);
+	
+})
+</script>
+
+
+
+-----------------------------------------------------------------------------------------
+
+jq 选项卡
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+
+<style>
+*{
+	margin:0; padding:0; list-style:none;
+}
+#div1 input{
+	background:#ccc;
+}
+#div1 input.active{
+	background:#000;
+}
+#div1 div{
+	width:200px; height:100px; border:1px solid red;
+	display:none;
+}
+#div1 div.cur{
+	display:block;
+}
+</style>
+
+
+
+</head>
+<body>
+
+<div id="div1">
+	<input type="button" value="aaaa" class=" a active b">
+	<input type="button" value="bbb" class="box">
+	<input type="button" value="ccc" class="bbox">
+    <div class="cur">aaaaa</div>
+    <div class="ttt">bbb</div>
+    <div>ccc</div>
+</div>
+
+
+<script src="vue/jquery-1.7.2.js"></script>
+<script>
+$(function(){
+	var oDiv=$('#div1');
+	var aIpt=$('#div1 input');
+	var aDiv=$('#div1 div');
+	var now=0;
+
+	aIpt.click(function(){
+		now=$(this).index();
+		tab();
+	});
+	function tab(){
+		aIpt.removeClass('active');
+		aDiv.removeClass('cur');
+
+		aIpt.eq(now).addClass('active');
+		aDiv.eq(now).addClass('cur');
+	};//tab
+
+	var timer=setInterval(function(){
+		now++;
+		now%=aIpt.length;
+		tab();
+	},1000);//timer;
+
+	oDiv.hover(function(){
+		clearInterval(timer);
+	},function(){
+		timer=setInterval(function(){
+			now++;
+			now%=aIpt.length;
+			tab();
+		},1000)
+	})
+})
+</script>
+</body>
+</html>
+
+
+------------------------------------------------------------------------------------------
+选项卡中 jq index的用法
+<script>
+$(function(){
+	var aIpt=$('div input');
+	var aDiv=$('div div');
+	aIpt.click(function(){
+		aIpt.attr('class','');
+		aDiv.attr('class','');
+		$(this).attr('class','active');
+		aDiv.eq($(this).index()).attr('class','cur');
+	})
+})
+</script>
+
+
+-------------------------------------------------------------------------------------
+
+jq 拖拽
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+
+<style>
+*{
+	margin:0; padding:0; list-style:none;
+}
+div{
+	width:100px; height:100px; background:#ccc;
+	position:absolute; left:0; top:0;
+}
+</style>
+
+
+
+</head>
+<body>
+<div id="div1"></div>
+
+
+<script src="vue/jquery-1.7.2.js"></script>
+<script>
+$(function(){
+	var oDiv=$('div');
+	oDiv.mousedown(function(ev){
+		var disX=ev.clientX-oDiv.position().left;
+		var disY=ev.clientY-oDiv.position().top;
+		$(document).mousemove(fnMove);
+		function fnMove(ev){
+			oDiv.css({
+				'left':ev.clientX-disX+'px',
+				'top':ev.clientY-disY+'px',
+			})
+		};//fnMove
+		$(document).mouseup(fnUp);
+		function fnUp(){
+			$(document).unbind('mousemove',fnMove);
+			$(document).unbind('mouseup',fnUp);
+			oDiv[0].releaseCapture && oDiv[0].releaseCapture();
+		}
+		oDiv.get(0).setCapture && oDiv.get(0).setCapture();
+		return false;
+
+	});//mousedown
+});
+</script>
+</body>
+</html>
+
+
+
+-------------------------------------------------------------------------------
+
+汉字转码  
+
+var str="开始的风景";
+alert(encodeURIComponent(str));
+
+
+-------------------------------------------------------------------------------
+
+各种ajax
+
+<script>
+function ajax(url,data,success,error){
+	var arr=[];
+	for(var key in data){
+		arr.push(key+"="+data[key]);
+	};
+	var str=arr.join('&');
+	if(window.XMLHttpRequest){
+		var oAjax=XMLHttpRequest();
+	} else {
+		var oAjax=new ActiveXObject('Microsoft.XMLHTTP');
+	};
+	//alert(url+'?'+str);
+	oAjax.open('get',url+"?"+str,true);
+	oAjax.send();
+	oAjax.onreadystatechange=function(){
+		if(oAjax.readyState==4){
+			if(oAjax.status>=200 && oAjax.status<300 || oAjax.status==304){
+				success(oAjax.responseText);
+			} else {
+				error(oAjax.status);
+			}
+		}
+	}
+}
+</script>
+
+
+
+
+
+<script>
+function ajax(url,data,type,success,error){
+//整理data
+	var arr=[];
+	for(var key in data){
+		arr.push(key+"="+data[key]);
+	};
+	var str=arr.join("&");
+//创建对象
+	if(window.XMLHttpRequest){
+		var oAjax=new XMLHttpRequest();
+	} else {
+		var oAjax=new ActiveXObject('Microsoft.XMLHTTP');
+	};
+//type整理
+	if(type=='get'){
+		oAjax.open('get',url+"?"+str,true);
+		oAjax.send();
+	} else {
+		oAjax.open('post',url,true);
+		oAjax.setRequestHeader('Content-Type','application/x-www-form-rulencoded');
+		oAjax.send(str);
+	};
+//事件判断
+	oAjax.onreadystatechange=function(){
+		if(oAjax.readyState==4){
+			if(oAjax.status>=200 && oAjax.status<300 || oAjax.status==304){
+				success(oAjax.responseText);
+			} else {
+				error(oAjax.status);
+			}
+		}
+	};
+}
+</script>
+
+
+
+
+
+<script>
+function ajax(url,data,type,timeout,success,error){
+	data.t=Math.random();
+	var arr=[];
+	for(var key in data){
+		arr.push(key+'='+encodeURIComponent(data[key]));
+	};
+	var str=arr.join('&');
+
+	if(window.XMLHttpRequest){
+		var oAjax=new XMLHttpRequest();
+	} else {
+		var oAjax=new ActiveXObject('Microsoft.XMLHTTP');
+	};
+
+	if(type=='get'){
+		oAjax.open('get',url+"?"+str,true);
+		oAjax.send();
+	} else {
+		oAjax.open('post',url,true);
+		oAjax.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+		oAjax.send(str);
+	};
+
+	oAjax.onreadystatechange=function(){
+		if(oAjax.readyState==4){
+			clearTimeout(timer);
+			if(oAjax.status>=200 && oAjax.status<300 || oAjax.status==304){
+				success(oAjax.responseText);
+			} else {
+				error(oAjax.status);
+			}
+		}
+	};// onreadystatechange
+
+	var timer=setTimeout(function(){
+		alert('overtime');
+		oAjax.abort();
+	},timeout)
+
+}
+</script>
+
+
+
+
+
+
+
+<script>
+function ajax(options){
+	options=options || {};
+	if(!options.url) return;
+	options.data=optionas.data || {};
+	options.type=options.type || 'get';
+	options.timeout=options.timeout || 0;
+
+	options.data.t=Math.random();
+	var arr=[];
+	for(var key in options.data){
+		arr.push(key+'='+encodeURIComponent(options.data[key]));
+	};
+	var str=arr.join('&');
+
+	if(window.XMLHttpRequest){
+		var oAjax=new XMLHttpRequest();
+	} else {
+		var oAjax=new ActiveXObject('Microsoft.XMLHTTP');
+	};
+
+	if(options.type=='get'){
+		oAjax.open('get',url+"?"+str,true);
+		oAjax.send();
+	} else {
+		oAjax.open('post',url,true);
+		oAjax.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+		oAjax.send(str);
+	};//type
+
+	oAjax.onreadystatechange=function(){
+		if(oAjax.readyState==4){
+			clearTimeout(timer);
+			if(oAjax.status>=200 && oAjax.status<300 || oAjax.status==304){
+				options.success && options.success(oAjax.responseText);
+			} else {
+				options.error && options.error(oAjax.status);
+			}
+		}
+	};//onreadystatechange
+
+	if(options.timeout){
+		var timer=setTimeout(function(){
+			alert('overTime');
+			oAjax.abort();
+		},timeout)
+	}
+}
+</script>
+
+
+
+
+
+
+--------------------------------------------------------------------------------------
+
+数据解析
+
+<script>
+
+var json={tab:1,page:2,msg:3};
+var arr=[];
+for(var key in json){
+	arr.push(key+'='json[key]);
+}
+var hash='#'+arr.join('&');
+window.location.hash=h;
+</script>
+
+
+
+
+<script>
+
+var hash = '#tab=1&page=2&msg=3';
+
+console.log(hash2json(hash));
+function hash2json(hash){
+	var json={};
+	hash=hash.substring(1);
+	var arr=hash.split('&');
+	for (var i = 0; i < arr.length; i++) {
+		var arr2=arr[i].split('=');
+		json[arr2[0]]=arr2[1];
+	}
+	return json;
+}
+
+</script>
+
+
+
+
+------------------------------------------------------------------------------------------------
+
+cookie
+
+
+<script>
+function setCookie(name,value,timeout){
+	var d=new Date();
+	d.setDate(d.getDate()+timeout);
+	document.cookie=name+'='+value+';expires='+d;
+}
+
+function getCookie(name){
+	var arr=document.cookie.split('; ');
+	for (var i = 0; i < arr.length; i++) {
+		var arr2=arr[i].split('=');
+		if(arr2[0]==name){
+			return arr2[1];
+		}
+	}
+	return '';
+}
+
+
+function removeCookie(name){
+	var d=new Date();
+	d.setDate(d.getDate()-1);
+	document.cookie=name+'=xxx;expires='+d;
+}
+</script>
+
+
+
+-------------------------------------------------------------------------------------------
+
+
+jsonp
+
+
+<input type="text" id="t1">
+<input type="button" value="search" id="btn1">
+<li>所查号码：<span id="Mobile"></span></li>
+<li>归属省份：<span id="Province"></span></li>
+<li>归属城市：<span id="City"></span></li>
+<li>城市区号：<span id="AreaCode"></span></li>
+<li>城市邮编：<span id="PostCode"></span></li>
+<li>运 营 商：<span id="TO"></span></li>
+
+
+<script>
+function jsonp(options){
+	options=options || {};
+	if(!options.url) return ;
+	if(!options.data) return;
+	options.cbKey=options.cbKey || 'cb';
+	options.timeout=options.timeout || 0;
+	options.success=options.success || null;
+	options.error=options.error || null;
+
+	var cbValue='jsonp'+Math.random();
+	options.data[options.cbKey]=cbValue.replace('.','');
+	window[options.data[options.cbKey]]=function(json){
+		options.success && options.success(json);
+		clearTimeout(timer);
+		document.getElementsByTagName('head')[0].removeChild(oSc);
+		window[options.data[options.cbKey]]=null;
+	}
+
+	var arr=[];
+	for(var key in options.data){
+		arr.push(key+'='+encodeURIComponent(options.data[key]));
+	}
+	options.url=options.url+'?'+arr.join('&');
+
+	var oSc=document.createElement('script');
+	oSc.src=options.url;
+	document.getElementsByTagName('head')[0].appendChild(oSc);
+
+	if(options.timeout){
+		var timer=setTimeout(function(){
+			options.error && options.error();
+			window[options.data[options.cbKey]]=function(){};
+		},options.timeout);
+	}
+}	
+
+</script>
+
+<script>
+
+var oT1=document.getElementById('t1');
+var oBtn=document.getElementById('btn1');
+oBtn.onclick=function(){
+	jsonp({
+		url: 'http://v.showji.com/Locating/showji.com2016234999234.aspx',
+		data: {m:oT1.value,output:'json'},
+		cbKey: 'callback',
+		success:function(json){
+			console.log(json);
+			for(var key in json){
+				var oSpan=document.getElementById(key);
+				if(oSpan){
+					oSpan.innerHTML=json[key];
+				}
+			}
+		}
+	})
+}
+
+
+
+
+---------------------------------------------------------------------------------------------
+
+test
+
+var oDiv=document.getElementById('div1');
+	alert(oDiv);
+	document.body.removeChild(oDiv);	
+	alert(oDiv);
+	oDiv=[12,5];
+	
+	oDiv.title='222';
+	oDiv.innerHTML='<h3>xxx</h3>';
+	alert(oDiv.title);alert(oDiv.innerHTML);
+	document.body.appendChild(oDiv);
+
+
+
+
+-----------------------------------------------------------------------------------
+正则
+
+js之正则表达式修饰符/ig 
+正则表达式中/i,/g,/ig,/gi,/m的区别和含义
+/i (忽略大小写)
+/g (全文查找出现的所有匹配字符)
+/m (多行查找)
+/gi(全文查找、忽略大小写)
+/ig(全文查找、忽略大小写)
+
+
+修饰符
+修饰符	描述
+i	执行对大小写不敏感的匹配。
+g	执行全局匹配（查找所有匹配而非在找到第一个匹配后停止）。
+m	执行多行匹配。
+方括号
+方括号用于查找某个范围内的字符：
+表达式	描述
+[abc]	查找方括号之间的任何字符。
+[^abc]	查找任何不在方括号之间的字符。
+[0-9]	查找任何从 0 至 9 的数字。
+[a-z]	查找任何从小写 a 到小写 z 的字符。
+[A-Z]	查找任何从大写 A 到大写 Z 的字符。
+[A-z]	查找任何从大写 A 到小写 z 的字符。
+[adgk]	查找给定集合内的任何字符。
+[^adgk]	查找给定集合外的任何字符。
+(red|blue|green)	查找任何指定的选项。
+元字符
+元字符（Metacharacter）是拥有特殊含义的字符：
+元字符	描述
+.	查找单个字符，除了换行和行结束符。
+w	查找单词字符。
+W	查找非单词字符。
+d	查找数字。
+D	查找非数字字符。
+s	查找空白字符。
+S	查找非空白字符。
+b	查找位于单词的开头或结尾的匹配。
+B	查找不处在单词的开头或结尾的匹配。
+查找 NUL 字符。
+n	查找换行符。
+f	查找换页符。
+r	查找回车符。
+t	查找制表符。
+v	查找垂直制表符。
+xxx	查找以八进制数 xxx 规定的字符。
+xdd	查找以十六进制数 dd 规定的字符。
+uxxxx	查找以十六进制数 xxxx 规定的 Unicode 字符。
+量词
+量词	描述
+n+	匹配任何包含至少一个 n 的字符串。
+n*	匹配任何包含零个或多个 n 的字符串。
+n?	匹配任何包含零个或一个 n 的字符串。
+n{X}	匹配包含 X 个 n 的序列的字符串。
+n{X,Y}	匹配包含 X 或 Y 个 n 的序列的字符串。
+n{X,}	匹配包含至少 X 个 n 的序列的字符串。
+n$	匹配任何结尾为 n 的字符串。
+^n	匹配任何开头为 n 的字符串。
+?=n	匹配任何其后紧接指定字符串 n 的字符串。
+?!n	匹配任何其后没有紧接指定字符串 n 的字符串。
+RegExp 对象属性
+FF: Firefox, IE: Internet Explorer
+属性	描述	FF	IE
+global	RegExp 对象是否具有标志 g。	1	4
+ignoreCase	RegExp 对象是否具有标志 i。	1	4
+lastIndex	一个整数，标示开始下一次匹配的字符位置。	1	4
+multiline	RegExp 对象是否具有标志 m。	1	4
+source	正则表达式的源文本。	1	4
+RegExp 对象方法
+FF: Firefox, IE: Internet Explorer
+方法	描述	FF	IE
+compile	编译正则表达式。	1	4
+exec	检索字符串中指定的值。返回找到的值，并确定其位置。	1	4
+test	检索字符串中指定的值。返回 true 或 false。	1	4
+支持正则表达式的 String 对象的方法
+FF: Firefox, IE: Internet Explorer
+方法	描述	FF	IE
+search	检索与正则表达式相匹配的值。	1	4
+match	找到一个或多个正则表达式的匹配。	1	4
+replace	替换与正则表达式匹配的子串。	1	4
+split	把字符串分割为字符串数组。
+
+
+
+
+
+
+------------------------------------------------------------------------------------------
+
+原型去重
+
+
+<script>
+Array.prototype.unique=function(){
+	for (var i = 0; i < this.length; i++) {
+		for(var j=i+1; j<this.length; j++){
+			if(this[i]==this[j]){
+				this.splice(j--,1);
+			}
+		}
+	}
+
+	return this;
+}
+
+var arr=[12,4,6,12,7,6,12,3,3,3,7];
+document.write(arr.unique());
+
+</script>
+
+--------------------------------------------------------------------------------------
+
+
+
+安装node 
+一直next就行
+cmd
+在Administrator> path
+如果里面有 Program Files\nodejs 就可以了
+切换到node.exe 所在的目录 
+在Administrator>  cd C:\Program Files\nodejs
+输入node -v
+查看版本号 
+
+上一级 目录  cd ..+enter
+切换盘符 d: + enter
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

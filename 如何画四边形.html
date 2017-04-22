@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1"/>
+    <meta charset="utf-8">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #000;
+        }
+
+        #c1 {
+            background: #fff;
+        }
+    </style>
+
+
+</head>
+
+<body>
+<canvas id="c1" width="800" height="500"></canvas>
+
+
+<script>
+var oC=document.querySelector('#c1');
+    var gd=oC.getContext('2d');
+    gd.beginPath();
+    gd.moveTo(300,100);
+    gd.lineTo(500,100);
+    gd.lineTo(500,200);
+    gd.lineTo(300,200);
+    gd.closePath();
+    gd.stroke();
+</script>
+</body>
+</html>

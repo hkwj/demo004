@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1"/>
+    <meta charset="utf-8">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #000;
+        }
+
+        #c1 {
+            background: #fff;
+        }
+    </style>
+
+
+</head>
+
+<body>
+<canvas id="c1" width="800" height="500"></canvas>
+
+
+<script>
+    var oC = document.querySelector('#c1');
+    var gd = oC.getContext('2d');
+    var arr = [100, 220, 400, 210, 140,490, 230, 160,420, 270, 150];
+    var space = 10;
+    var w = 30;
+    var iMax = Math.max.apply(null, arr);
+    var arrH = [];
+    for (var i = 0; i < arr.length; i++) {
+        arrH.push(arr[i] / iMax * oC.height);
+    }
+
+    for(var i=0; i<arrH.length; i++){
+        var r=parseInt(Math.random()*255);
+        var g=parseInt(Math.random()*255);
+        var b=parseInt(Math.random()*255);
+
+        gd.fillStyle='rgb('+r+','+g+','+b+')';
+        //fillRect(x,y,width,height);
+        gd.fillRect((w+space)*i,oC.height-arrH[i],w,arrH[i]);
+        gd.strokeRect((w+space)*i,oC.height-arrH[i],w,arrH[i]);
+    }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            list-style:none;
+        }
+        body{
+            background:#000;
+            text-align:center;
+        }
+#c1{
+    background:#fff;
+}
+    </style>
+
+
+</head>
+
+<body>
+<canvas width="800" height="500" id="c1"></canvas>
+
+
+<script>
+var oC=document.querySelector('#c1');
+    var gd=oC.getContext('2d');
+
+    var oImg=new Image();
+    oImg.onload=function(){
+        var i=0;
+        setInterval(function(){
+            gd.clearRect(0,0,oC.width,oC.height);
+            gd.drawImage(
+                    oImg,0,60*(i%10),60,60,
+                    200,100,60,60
+            )
+            i++;
+        },100)
+    }
+    oImg.src='coin.png';
+
+
+</script>
+</body>
+</html>

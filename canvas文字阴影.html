@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        body {
+            background: #000;
+        }
+
+        #c1 {
+            background: #fff;
+        }
+    </style>
+
+
+</head>
+
+<body>
+<canvas width="800" height="500" id="c1"></canvas>
+
+
+<script>
+var oC=document.querySelector('#c1');
+    var gd=oC.getContext('2d');
+    gd.shadowOffsetX=8;
+    gd.shadowOffsetY=6;
+    gd.shadowBlur=4;
+    gd.shadowColor='red';
+
+    gd.font='60px kaiti';
+    gd.strokeText('kaitai',150,100);
+</script>
+</body>
+</html>

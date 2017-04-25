@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        body {
+            background: #000;
+            text-align: center;
+        }
+
+        #c1 {
+            background: #fff;
+        }
+    </style>
+
+
+</head>
+
+<body>
+<canvas width="800" height="500" id="c1"></canvas>
+
+
+<script>
+function d2a(n){
+    return n*Math.PI/180;
+}
+
+
+    var oC=document.getElementById('c1');
+    var gd=oC.getContext('2d');
+    var cx=300;
+    var cy=200;
+    var r=100;
+    var arr=[100,200,280,500,320];
+
+    var sum=arr.reduce(function(n1,n2){
+        return n1+n2;
+    })
+
+
+    var aPie=[];
+    arr.forEach(function(n){
+        aPie.push(n/sum*360);
+    })
+
+    var d=0;
+    aPie.forEach(function(n){
+        gd.beginPath();
+        gd.moveTo(cx,cy);
+        gd.arc(cx,cy,r,d2a(d),d2a(d+n),false);
+        gd.closePath();
+        gd.fillStyle='rgb('+parseInt(Math.random()*256)+','+parseInt(Math.random()*256)+','+parseInt(Math.random()*256)+')';
+
+        console.log(gd.fillStyle);
+        gd.fill();
+        d+=n;
+    })
+
+</script>
+</body>
+</html>

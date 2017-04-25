@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        body {
+            background: #000;
+        }
+
+        #c1 {
+            background: #fff;
+        }
+    </style>
+
+
+</head>
+
+<body>
+<canvas width="800" height="500" id="c1"></canvas>
+
+
+<script>
+var oC=document.getElementById('c1');
+    var gd=oC.getContext('2d');
+    gd.shadowOffsetX=10;
+    gd.shadowOffsetY=10;
+    gd.shadowBlur=6;
+    gd.shadowColor='green';
+    gd.strokeRect(200,100,200,100);
+
+</script>
+</body>
+</html>

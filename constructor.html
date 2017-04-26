@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+
+</head>
+
+<body>
+
+
+<script>
+function Person(name,age){
+    this.name=name;
+    this.age=age;
+}
+    Person.prototype.showName=function(){
+        alert(this.name);
+    }
+    function Worker(name,age,job){
+        Person.call(this,name,age);
+        this.job=job;
+    }
+    Worker.prototype=new Person();
+    Worker.prototype.constructor=Worker;
+    Worker.prototype.showJob=function(){
+        alert(this.job);
+    }
+
+
+    var p=new Person('aa',22);
+    var w=new Worker('bbb',33,'worker');
+    alert(w.constructor);
+</script>
+
+</body>
+</html>

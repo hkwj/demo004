@@ -1,0 +1,50 @@
+<!doctype html>
+<html ng-app="index">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+
+    </style>
+
+
+</head>
+
+<body ng-controller="ajax">
+<input type="button" value="click" ng-click="a=a+1">{{a}}
+<ul>
+    <li ng-repeat="item in arr">{{item}}</li>
+</ul>
+
+
+
+<script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script>
+<script src="ajax.js"></script>
+<script>
+var app=angular.module('index',[]);
+    app.controller('ajax',function($scope){
+        $scope.a=0;
+        $scope.arr=[];
+        var url='arr.txt';
+        ajax(
+            url,
+            function(str){
+                var arr=eval('('+str+')');
+                $scope.arr=arr;
+                alert($scope.arr);
+            },
+            function(){
+                alert('error');
+            }
+        )
+    })
+
+</script>
+</body>
+</html>

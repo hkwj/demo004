@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <style>
+        div{
+            width:100px; height:100px; background:#ccc;
+        }
+    </style>
+</head>
+
+<body ng-controller="jsonp" ng-app="index">
+<input type="text" value="" ng-model="wd" ng-keyup="show()">
+<ul>
+    <li ng-repeat="value in arr">{{value}}</li>
+</ul>
+
+
+<script src="vue/angular.js"></script>
+<script>
+
+
+    var app=angular.module('index',[]);
+    app.controller('jsonp',function($scope,$http){
+        $scope.wd='';
+        $scope.arr=[];
+        var url='https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su';
+        $scope.show=function(){
+            $http.jsonp(url,{
+                params:{
+                    wd:$scope.wd,
+                    cb:'JSON_CALLBACK'
+                },
+            }).success(function(json){
+                $scope.arr=json.s;
+            })
+        }
+    })
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset= "UTF-8">
+<style>
+*{margin:0; padding:0; list-style:none;}
+
+</style>
+
+</head>
+<body>
+
+
+
+<script>
+
+ //alert( fn2(2, 5) );			// [ 2,3,4,5 ]
+
+function fn2(m,n){
+	var arr=[];
+
+	if(m>n){
+		var a=n;
+		n=m;
+		m=a;
+	};//确保较小数在前面
+
+	for(var i=m; i<=n; i++){
+		arr.push(i);
+	}
+	return arr;
+}
+
+alert(fn2(6,1));
+
+</script>
+</body>
+</html> 

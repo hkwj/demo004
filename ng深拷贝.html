@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="index">
+<head>
+	<meta charset= "UTF-8">
+<style>
+
+</style>
+
+<script src="work/angular.js"></script>
+
+</head>
+<body>
+
+
+<script>
+var arr1=[111,{a:"a",b:"b"},66];
+var arr2=[];
+
+angular.copy(arr1,arr2);
+arr1[1].a="100";
+
+console.log(arr1,arr2);
+
+
+
+</script>
+</body>
+</html> 

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="index">
+<head>
+	<meta charset= "UTF-8">
+<style>
+div{
+	width:200px; height:200px;
+	background:#ccc;
+}
+
+
+</style>
+
+<script src="work/angular.js"></script>
+</head>
+<body>
+<div id="div1"></div>
+
+<script>
+angular.element(document).ready(function(){
+	var oDiv=document.getElementById('div1');
+	angular.element(oDiv).on('click',function(){
+		angular.element(this).css('background','red');
+	})
+})
+
+</script>
+</body>
+</html> 

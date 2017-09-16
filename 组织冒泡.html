@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset= "UTF-8">
+
+<style>
+.red{
+	background:red;
+}
+.yellow{
+	background:yellow;
+}
+
+
+</style>
+<script>
+window.onload=function(){
+	var aLi=document.getElementById('ul1').children;
+	var oA=document.getElementsByTagName('a')[0];
+	for(var i=0; i<aLi.length; i++){
+		aLi[i].className='yellow';
+		aLi[i].onclick=function(ev){
+			this.className="red";
+		};
+	};
+
+	oA.onclick=function(ev){
+		var oEvt=ev||event;
+		this.style.color='white';
+		oEvt.stopPropagation();
+	};
+}
+
+</script>
+</head>
+<body>
+<ul id="ul1" style="border:1px solid red;">
+	<li>1111 <span>span span</span></li>
+	<li>2222 <a>aaaaaaa</a></li>
+	<li>3333</li>
+	<li>4444</li>
+	<p>pppppppppppp</p>
+	<span>span span span </span>
+</ul>
+
+
+<script>
+
+
+
+</script>	
+</body>
+</html> 

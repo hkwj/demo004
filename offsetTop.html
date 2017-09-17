@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset= "UTF-8">
+
+<style>
+*{margin:0; padding:0;}
+div{padding:40px 50px;}
+#div1{
+	background:red;
+}
+#div2{
+	background:green; zoom:1;
+}
+#div3{
+	background:orange;
+}
+</style>
+<script>
+window.onload=function(){
+	var oDiv3=document.getElementById('div3');
+	alert(oDiv3.offsetTop);
+}
+</script>
+</head>
+<body id="body1">
+	<div id="div1">
+    	<div id="div2">
+        	<div id="div3"></div>
+        </div>
+    </div>
+<script>
+
+
+
+</script>	
+</body>
+</html> 

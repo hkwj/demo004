@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset= "UTF-8">
+
+<style>
+*{margin:0; padding:0;}
+div{padding: 40px 50px;}
+#div1{
+	background:red; position:relative;
+}
+#div2{
+	background:green; position:relative;
+}
+#div3{
+	background:orange; position:relative;
+}
+</style>
+<script>
+window.onload=function(){
+	var oDiv3=document.getElementById('div3');
+	//alert(oDiv3.offsetLeft);
+	//alert(oDiv3.offsetTop);
+	var pos=getPos(oDiv3);
+	alert(pos.left+'|||'+pos.top);
+	function getPos(obj){
+		var pos={left:0,top:0};
+		while(obj){
+			pos.left+=obj.offsetLeft;
+			pos.top+=obj.offsetTop;
+			obj=obj.offsetParent;
+		};
+		return pos;
+	};
+}
+</script>
+</head>
+<body id="body1">
+	<div id="div1">
+    	<div id="div2">
+        	<div id="div3"></div>
+        </div>
+    </div>
+<script>
+
+
+
+</script>	
+</body>
+</html> 
